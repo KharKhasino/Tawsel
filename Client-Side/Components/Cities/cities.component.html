@@ -1,0 +1,20 @@
+<div class="container">
+  <input type="text" class="form-control text-center " [value]="resp.name" readonly>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Shipping Price</th>
+        <th>Settings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of cities | keyvalue">
+        <td>{{ city.key }}</td>
+        <td>{{ city.value }} <span style="color: tomato;">L.E.</span></td>
+        <td><a class="btn btn-primary m-2">Edit</a><a class="btn btn-danger">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <button routerLink="Add" class="btn btn-success" (click)="passId(resp.id)">Add New City</button>
+</div>
