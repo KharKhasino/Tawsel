@@ -1,0 +1,61 @@
+<!-- <div class="container">
+  <form [formGroup]="addRecord" (ngSubmit)="onSubmit()" novalidate>
+    <div >
+      <label class="form-label" for="name">Name</label>
+      <input
+        id="name"
+        type="text"
+        name="name"
+        class="form-control"
+        formControlName="name"
+      />
+      <p
+        *ngIf="
+          registerFormControl['name'].touched &&
+          registerFormControl['name'].errors
+        "
+      >
+        Name Can't be Empty
+      </p>
+    </div>
+
+    <div>
+      <label class="form-label" for="Price">Price</label>
+      <input
+        id="price"
+        type="number"
+        name="price"
+        formControlName="price"
+        class="form-control"
+      />
+      <p
+        *ngIf="
+          registerFormControl['price'].touched &&
+          registerFormControl['price'].errors
+        "
+      >
+        Price Must be More than 0
+      </p>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block confirm-button">
+      Add New
+    </button>
+  </form>
+</div> -->
+
+<div class="container">
+  <form>
+    <label for="name">Name</label>
+    <input type="text" #name class="form-control" /><br />
+    <label for="Price">Price</label>
+    <input type="text" #Price class="form-control" /><br />
+    <button
+      type="button"
+      (click)="AddNew(name.value, Price.value)"
+      class="btn btn-primary m-2"
+    >
+      Add New
+    </button>
+  </form>
+</div>
