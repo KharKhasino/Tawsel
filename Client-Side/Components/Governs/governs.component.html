@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class="text-center">All Governorates</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Settings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gov of Govs" id="tRow">
+        <td>{{ gov.id }}</td>
+        <td>{{ gov.name }}</td>
+        <td><a [routerLink]="['/governs', gov.id]" class="btn btn-info">Details</a></td>
+        <!-- <ul style="display: none; list-style: none;">
+          <tr *ngFor="let item of Govs.">
+
+          </tr>
+        </ul> -->
+      </tr>
+    </tbody>
+  </table>
+  <a routerLink="governs/Add" class="btn btn-success">Add New Gov</a>
+</div>
