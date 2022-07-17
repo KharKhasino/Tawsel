@@ -71,12 +71,25 @@ namespace Shipping.API.Controllers
         //}
 
         [HttpPost]
-        public async Task<ActionResult<GovernDto>> PostGovernorate(GovernDto gov)
+        public async Task<ActionResult<GovernDto>> PostGovernorate([FromBody] GovernDto gov)
         {
-            var result = await repo.AddGovern(gov);
+            try
+            {
+                var result = await repo.AddGovern(gov);
+                if (result == null)
+                    return NotFound();
 
-            return CreatedAtAction(nameof(GetGovernorate),
-                new { id = result.Id }, result.ConvertToDto());
+                var newGov = result.ConvertToDto;
+                return CreatedAtAction(nameof(GetGovernorate),
+                    new { id = result.Id }, newGov);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went Wrong!");
+
+            }
+
         }
 
         // DELETE: api/Governorates/5
