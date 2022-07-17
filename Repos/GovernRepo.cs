@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shipping.API.Data;
 using Shipping.API.Extensions;
 using Shipping.API.Models.DTOs;
@@ -26,10 +26,10 @@ namespace Shipping.API.Repos
         public async Task<GovernCitiesDto> GetGovernDetails(int id)
         {
             var govern = await context.Governorates.FirstOrDefaultAsync(g => g.Id == id);
-            if(govern != null)
+            if (govern != null)
             {
 
-            var cities = await context.Cities.Include(c=>c.Governorate).Where(c=>c.Gov_Id == govern.Id).ToListAsync();
+                var cities = await context.Cities.Include(c => c.Governorate).Where(c => c.Gov_Id == govern.Id).ToListAsync();
                 if (cities.Any())
                 {
                     var details = new GovernCitiesDto
@@ -38,14 +38,19 @@ namespace Shipping.API.Repos
                         Name = govern.Name,
                     };
 
-                    foreach(var item in cities)
+                    foreach (var item in cities)
                     {
                         details.Cities.Add(item.Name, item.Price);
                     }
 
                     return details;
                 }
-                return null;
+                var gov = new GovernCitiesDto
+                {
+                    Id = govern.Id,
+                    Name = govern.Name
+                };
+                return gov;
             }
             return null;
         }
@@ -63,14 +68,14 @@ namespace Shipping.API.Repos
         }
         public async Task<Governorate> AddGovern(GovernDto gov)
         {
-            var newGov = new Governorate()
+            var newGov = new Governorate
             {
-                Id = gov.Id,
+                Id = new int(),
                 Name = gov.Name,
             };
-            var result = await context.Governorates.AddAsync(newGov);
+            await context.AddAsync(newGov);
             await context.SaveChangesAsync();
-            return result.Entity;
+            return newGov;
         }
 
         public async Task<City> AddCity(CityDto city)
@@ -138,6 +143,11 @@ namespace Shipping.API.Repos
         public Task<City> GetCityById(int id)
         {
             var city = context.Cities.FirstOrDefaultAsync(c => c.Id == id);
+            return city;
+        }
+        public Task<City> GetCityByName(string name)
+        {
+            var city = context.Cities.FirstOrDefaultAsync(c => c.Name.Replace(" ","") == name);
             return city;
         }
     }

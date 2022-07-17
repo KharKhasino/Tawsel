@@ -16,5 +16,6 @@ namespace Shipping.API.Repos
         Task<City> GetCityById(int id);
         Task<City> UpdateCity(int id, CityDto city);
         Task<City> DeleteCity(int id);
+        Task<City> GetCityByName(string name);
     }
 }
